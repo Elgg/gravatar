@@ -54,7 +54,7 @@
 			if (isset($size_lookup[$params['size']]))
 				$size = $size_lookup[$params['size']];
 				
-			return "http://www.gravatar.com/avatar/".md5($params['entity']->email) . ".jpg?s=$size";
+			return "https://secure.gravatar.com/avatar/".md5($params['entity']->email) . ".jpg?s=$size";
 			
 		}
 	}
