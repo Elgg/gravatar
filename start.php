@@ -13,7 +13,7 @@
 function gravatar_init() {
 	// Now override icons. Note priority: This sits somewhere between the profile user icons and default icons -
 	// so if you specify an icon for a user it will use that, else it will try a gravatar icon.
-	register_plugin_hook('entity:icon:url', 'user', 'gravatar_usericon_hook', 900);
+	elgg_register_plugin_hook('entity:icon:url', 'user', 'gravatar_usericon_hook', 900);
 }
 
 /**
@@ -43,4 +43,4 @@ function gravatar_usericon_hook($hook, $entity_type, $returnvalue, $params) {
 }
 
 // Initialise plugin
-register_elgg_event_handler('init', 'system', 'gravatar_init');
+elgg_register_event_handler('init', 'system', 'gravatar_init');
