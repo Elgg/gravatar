@@ -4,12 +4,12 @@
 	<author>Curverider Ltd</author>
 	<version>1.8</version>
 	<category>enhancement</category>
-	<description>Gravatar integration for Elgg</description>
+	<description>Uses avatars from gravatar.com for users that haven't uploaded one.</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>(C) Curverider 2008-2010</copyright>
-	<license>GNU Public License version 2</license>
+	<license>GNU General Public License v2</license>
 	<requires>
-		<type>elgg_version</type>
-		<version>2011030101</version>
+		<type>elgg_release</type>
+		<version>1.8</version>
 	</requires>
 </plugin_manifest>
