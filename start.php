@@ -32,7 +32,7 @@ function gravatar_usericon_hook($hook, $entity_type, $returnvalue, $params) {
 		'topbar' => '16',
 	);
 
-	if (!$returnvalue) {
+	if (!$params['entity']->icontime) {
 		$size = 40;
 		if (isset($size_lookup[$params['size']])) {
 			$size = $size_lookup[$params['size']];
