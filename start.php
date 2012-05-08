@@ -38,7 +38,7 @@ function gravatar_usericon_hook($hook, $entity_type, $returnvalue, $params) {
 			$size = $size_lookup[$params['size']];
 		}
 
-		return "https://secure.gravatar.com/avatar/".md5($params['entity']->email) . ".jpg?s=$size";
+		return "https://secure.gravatar.com/avatar/".md5($params['entity']->email) . ".jpg?d=mm&s=$size";
 	}
 }
 
