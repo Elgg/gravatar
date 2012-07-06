@@ -1,46 +1,31 @@
 <?php
 /**
- * @package ElggGravatar
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @author Curverider Ltd
- * @copyright Curverider Ltd 2008-2010
- * @link http://elgg.com/
+ * Gravatar plugin
  */
 
-/**
- * Init.
- */
+elgg_register_event_handler('init', 'system', 'gravatar_init');
+
 function gravatar_init() {
-	// Now override icons. Note priority: This sits somewhere between the profile user icons and default icons -
-	// so if you specify an icon for a user it will use that, else it will try a gravatar icon.
-	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'gravatar_usericon_hook', 900);
+	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'gravatar_avatar_hook', 900);
 }
 
 /**
- * This hooks into the getIcon API and returns a gravatar icon where possible
+ * This hooks into the getIcon API and returns a gravatar icon
  */
-function gravatar_usericon_hook($hook, $entity_type, $returnvalue, $params) {
-	global $CONFIG;
+function gravatar_avatar_hook($hook, $type, $url, $params) {
 
-	// Size lookup. TODO: Do this better to allow for changed themes.
-	$size_lookup = array(
-		'master' => '200',
-		'large' => '200',
-		'medium' => '100',
-		'small' => '40',
-		'tiny' => '25',
-		'topbar' => '16',
-	);
-
+	// check if user already has an icon
 	if (!$params['entity']->icontime) {
-		$size = 40;
-		if (isset($size_lookup[$params['size']])) {
-			$size = $size_lookup[$params['size']];
+		$icon_sizes = elgg_get_config('icon_sizes');
+		$size = $params['size'];
+		if (!in_array($size, array_keys($icon_sizes))) {
+			$size = 'small';
 		}
 
-		return "https://secure.gravatar.com/avatar/".md5($params['entity']->email) . ".jpg?d=mm&s=$size";
+		// avatars must be square
+		$size = $icon_sizes[$size]['w'];
+
+		$hash = md5($params['entity']->email);
+		return "https://secure.gravatar.com/avatar/$hash.jpg?d=mm&s=$size";
 	}
 }
-
-// Initialise plugin
-elgg_register_event_handler('init', 'system', 'gravatar_init');

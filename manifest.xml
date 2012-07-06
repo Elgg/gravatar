@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 	<name>Gravatar</name>
-	<author>Curverider Ltd</author>
+	<author>Core developers</author>
 	<version>1.8</version>
 	<category>enhancement</category>
 	<description>Uses avatars from gravatar.com for users that haven't uploaded one.</description>
-	<website>http://www.elgg.org/</website>
-	<copyright>(C) Curverider 2008-2010</copyright>
+	<website>https://github.com/Elgg/gravatar</website>
+	<copyright>(C) Elgg Foundation 2012</copyright>
 	<license>GNU General Public License v2</license>
 	<requires>
 		<type>elgg_release</type>
