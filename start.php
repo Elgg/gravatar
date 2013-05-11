@@ -26,6 +26,6 @@ function gravatar_avatar_hook($hook, $type, $url, $params) {
 		$size = $icon_sizes[$size]['w'];
 
 		$hash = md5($params['entity']->email);
-		return "https://secure.gravatar.com/avatar/$hash.jpg?d=mm&s=$size";
+		return "https://seccdn.libravatar.org/avatar/$hash.jpg?d=mm&s=$size";
 	}
 }
