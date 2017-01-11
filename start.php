@@ -32,14 +32,16 @@ function gravatar_avatar_hook($hook, $type, $url, $params) {
 	// avatars must be square
 	$pixels = !empty($sizes[$size]['w']) ? $sizes[$size]['w'] : 40;
 
-	$default = "mm";
+	$icon_view = "icons/user/default/{$size}.gif";
+	if (!elgg_view_exists($icon_view)) {
+		// Elgg 2.x
+		$icon_view = "icons/user/default{$size}.gif";
+	}
+	$default = elgg_get_simplecache_url($icon_view);
 
-	// use local default icons
-// 	if (elgg_view_exists("icons/user/default/{$size}.gif")) {
-// 		$default = elgg_get_simplecache_url("icons/user/default/{$size}.gif");
-// 	} else {
-// 		$default = elgg_get_simplecache_url("icons/user/default{$size}.gif");
-// 	}
+	// Comment this out if you wanna send your URLs to gravatar and have your
+	// own default icon displayed in case they have none for users email address
+	$default = "mm";
 
 	return "$api/$hash?" . http_build_query([
 		's' => $pixels,
