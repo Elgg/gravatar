@@ -16,8 +16,12 @@ function gravatar_avatar_hook($hook, $type, $url, $params) {
 	if ($params['entity']->icontime) {
 		return;	
 	}
+	
+	$api = 'https://www.gravatar.com/avatar';
+// 	$api = 'https://seccdn.libravatar.org/avatar';
 
-	$hash = md5($params['entity']->email);
+	$email = $params['entity']->email;
+	$hash = md5(strtolower(trim($email)));
 
 	$size = $params['size'];
         $sizes = function_exists("elgg_get_icon_sizes") ? elgg_get_icon_sizes('user') : elgg_get_config('icon_sizes');
@@ -37,7 +41,7 @@ function gravatar_avatar_hook($hook, $type, $url, $params) {
 // 		$default = elgg_get_simplecache_url("icons/user/default{$size}.gif");
 // 	}
 
-	return "https://www.gravatar.com/avatar/$hash?" . http_build_query([
+	return "$api/$hash?" . http_build_query([
 		's' => $pixels,
 		'd' => $default,
 	]);
