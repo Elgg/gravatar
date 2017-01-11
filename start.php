@@ -24,15 +24,15 @@ function gravatar_avatar_hook($hook, $type, $url, $params) {
 	$hash = md5(strtolower(trim($email)));
 
 	$size = $params['size'];
-        $sizes = function_exists("elgg_get_icon_sizes") ? elgg_get_icon_sizes('user') : elgg_get_config('icon_sizes');
+	$sizes = function_exists("elgg_get_icon_sizes") ? elgg_get_icon_sizes('user') : elgg_get_config('icon_sizes');
 	if (!empty($sizes[$size])) {
 		$size = 'small';
 	}
 
-        // avatars must be square
+	// avatars must be square
 	$pixels = !empty($sizes[$size]['w']) ? $sizes[$size]['w'] : 40;
 
-        $default = "mm";
+	$default = "mm";
 
 	// use local default icons
 // 	if (elgg_view_exists("icons/user/default/{$size}.gif")) {
