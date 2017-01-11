@@ -13,19 +13,38 @@ function gravatar_init() {
  * This hooks into the getIcon API and returns a gravatar icon
  */
 function gravatar_avatar_hook($hook, $type, $url, $params) {
-
-	// check if user already has an icon
-	if (!$params['entity']->icontime) {
-		$icon_sizes = elgg_get_config('icon_sizes');
-		$size = $params['size'];
-		if (!in_array($size, array_keys($icon_sizes))) {
-			$size = 'small';
-		}
-
-		// avatars must be square
-		$size = $icon_sizes[$size]['w'];
-
-		$hash = md5($params['entity']->email);
-		return "https://secure.gravatar.com/avatar/$hash.jpg?d=mm&s=$size";
+	if ($params['entity']->icontime) {
+		return;	
 	}
+	
+	$api = 'https://www.gravatar.com/avatar';
+// 	$api = 'https://seccdn.libravatar.org/avatar';
+
+	$email = $params['entity']->email;
+	$hash = md5(strtolower(trim($email)));
+
+	$size = $params['size'];
+	$sizes = function_exists("elgg_get_icon_sizes") ? elgg_get_icon_sizes('user') : elgg_get_config('icon_sizes');
+	if (!empty($sizes[$size])) {
+		$size = 'small';
+	}
+
+	// avatars must be square
+	$pixels = !empty($sizes[$size]['w']) ? $sizes[$size]['w'] : 40;
+
+	$icon_view = "icons/user/default/{$size}.gif";
+	if (!elgg_view_exists($icon_view)) {
+		// Elgg 2.x
+		$icon_view = "icons/user/default{$size}.gif";
+	}
+	$default = elgg_get_simplecache_url($icon_view);
+
+	// Comment this out if you wanna send your URLs to gravatar and have your
+	// own default icon displayed in case they have none for users email address
+	$default = "mm";
+
+	return "$api/$hash?" . http_build_query([
+		's' => $pixels,
+		'd' => $default,
+	]);
 }
